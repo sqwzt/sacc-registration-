@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACC 2026 创新挑战赛报名</title>
+    <style>
+        /* ========== CSS 样式区 ========== */
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #dddddd;
+            --primary-color: #409eff;
+            --primary-hover: #337ecc;
+        }
+
+        /* 选做：深色模式变量 */
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #f0f0f0;
+            --border-color: #444444;
+            --primary-color: #337ecc;
+            --primary-hover: #2860a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s, color 0.3s;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .theme-toggle { cursor: pointer; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-color); }
+
+        .card {
+            background: var(--card-bg); padding: 24px; border-radius: 12px; margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+        }
+
+        .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        label { font-weight: 600; font-size: 14px; }
+        .required::after { content: ' *'; color: red; }
+
+        input, select, textarea {
+            padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); 
+            font-size: 14px; background: var(--card-bg); color: var(--text-color); transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); }
+
+        .radio-group { flex-direction: row !important; align-items: center; gap: 16px; }
+        .radio-options { display: flex; gap: 20px; font-weight: normal; }
+
+        .submit-btn {
+            width: 100%; padding: 12px; background-color: var(--primary-color); color: #fff; border: none;
+            border-radius: 8px; font-size: 16px; cursor: pointer; transition: background 0.2s;
+        }
+        .submit-btn:hover { background-color: var(--primary-hover); }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 100;
+        }
+        .modal-card { background: var(--card-bg); padding: 30px; border-radius: 12px; text-align: center; max-width: 360px; color: var(--text-color); }
+        .receipt-info { background: var(--bg-color); padding: 12px; border-radius: 8px; margin: 16px 0; text-align: left; font-size: 14px; }
+        .close-btn { margin-top: 10px; padding: 8px 24px; background: var(--primary-color); color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+
+        /* 响应式布局 */
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <h1>SACC 2026 创新挑战赛</h1>
+        <button class="theme-toggle" id="themeBtn">🌙 切换暗色</button>
+    </header>
+
+    <!-- 1. 比赛信息展示区 -->
+    <section class="card">
+        <h2>🏆 比赛基本信息</h2>
+        <p><strong>比赛名称：</strong>SACC 2026 校园创新挑战赛</p>
+        <p><strong>比赛时间：</strong>2026年9月15日 - 9月17日</p>
+        <p><strong>比赛地点：</strong>大学生活动中心 & 线上同步</p>
+        <p><strong>报名截止：</strong>2026年9月10日 23:59</p>
+        <p style="margin-top: 8px; color: #666;">本次大赛旨在激发同学们的创新思维与实践能力，涵盖设计、算法与创业三大方向。无论你是技术极客还是创意达人，这里都有属于你的舞台！</p>
+    </section>
+
+    <!-- 2. 报名表单 -->
+    <form class="card" id="regForm" novalidate>
+        <h2>📝 填写报名信息</h2>
+        
+        <div class="form-group">
+            <label for="name" class="required">姓名</label>
+            <input id="name" name="name" placeholder="请输入真实姓名" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="studentId" class="required">学号</label>
+                <input id="studentId" name="studentId" placeholder="如：20230001" />
+            </div>
+            <div class="form-group">
+                <label for="major" class="required">学院/专业</label>
+                <input id="major" name="major" placeholder="如：计算机科学与技术" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone" class="required">手机号</label>
+                <input id="phone" name="phone" placeholder="11位手机号码" />
+            </div>
+            <div class="form-group">
+                <label for="email" class="required">邮箱</label>
+                <input id="email" name="email" type="email" placeholder="example@edu.cn" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="category" class="required">参赛类别</label>
+            <select id="category" name="category">
+                <option value="" disabled selected>请选择参赛类别</option>
+                <option value="design">创新设计类</option>
+                <option value="algorithm">算法竞赛类</option>
+                <option value="startup">创业实践类</option>
+            </select>
+        </div>
+
+        <div class="form-group radio-group">
+            <label class="required">是否服从调剂</label>
+            <div class="radio-options">
+                <label><input type="radio" name="adjust" value="yes" /> 是</label>
+                <label><input type="radio" name="adjust" value="no" /> 否</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bio">个人简介/参赛宣言</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="简单介绍一下自己或你的参赛目标吧..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">确认报名</button>
+    </form>
+</div>
+
+<!-- 4. 提交反馈 & 选做：报名凭证 -->
+<div class="modal-overlay" id="receiptModal">
+    <div class="modal-card">
+        <h3>🎉 报名成功！</h3>
+        <p>同学你好，你的报名凭证如下：</p>
+        <div class="receipt-info" id="receiptContent"></div>
+        <p style="font-size: 12px; color: #888;">请截图保存此凭证，后续将用于签到核验。</p>
+        <button class="close-btn" id="closeModalBtn">我知道了</button>
+    </div>
+</div>
+
+<script>
+    // ========== JS 交互逻辑区 ==========
+    const form = document.getElementById('regForm');
+    const themeBtn = document.getElementById('themeBtn');
+    const receiptModal = document.getElementById('receiptModal');
+    const receiptContent = document.getElementById('receiptContent');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    // 选做：深色模式切换
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        themeBtn.textContent = isDark ? '☀️ 切换亮色' : '🌙 切换暗色';
+        localStorage.setItem('sacc-theme', isDark ? 'dark' : 'light');
+    });
+    // 恢复主题
+    if (localStorage.getItem('sacc-theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeBtn.textContent = '☀️ 切换亮色';
+    }
+
+    // 选做：localStorage 保存草稿
+    const fields = ['name', 'studentId', 'major', 'phone', 'email', 'category', 'bio'];
+    // 页面加载时恢复草稿
+    window.addEventListener('DOMContentLoaded', () => {
+        const draft = JSON.parse(localStorage.getItem('sacc-draft') || '{}');
+        fields.forEach(f => { if (draft[f]) form[f].value = draft[f]; });
+        if (draft.adjust) {
+            const radio = document.querySelector(`input[name="adjust"][value="${draft.adjust}"]`);
+            if (radio) radio.checked = true;
+        }
+    });
+    // 实时保存草稿
+    form.addEventListener('input', saveDraft);
+    form.addEventListener('change', saveDraft);
+    function saveDraft() {
+        const data = {};
+        fields.forEach(f => data[f] = form[f].value);
+        data.adjust = document.querySelector('input[name="adjust"]:checked')?.value || '';
+        localStorage.setItem('sacc-draft', JSON.stringify(data));
+    }
+
+    // 3. 表单验证与提交
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const name = data.get('name')?.trim();
+        const studentId = data.get('studentId')?.trim();
+        const major = data.get('major')?.trim();
+        const phone = data.get('phone')?.trim();
+        const email = data.get('email')?.trim();
+        const category = data.get('category');
+        const adjust = data.get('adjust');
+
+        // 必填校验
+        if (!name || !studentId || !major || !phone || !email || !category || !adjust) {
+            alert('请确保所有必填项（带 * 号）均已填写！'); return;
+        }
+        // 手机号校验
+        if (!/^1\d{10}$/.test(phone)) { alert('请输入正确的11位手机号码！'); return; }
+        // 学号校验 (示例：8位数字)
+        if (!/^\d{8}$/.test(studentId)) { alert('学号格式不正确，请输入8位数字学号！'); return; }
+
+        // 4. 提交反馈 & 生成凭证
+        const receiptId = 'SACC-' + Date.now().toString().slice(-8);
+        const categoryMap = { design: '创新设计类', algorithm: '算法竞赛类', startup: '创业实践类' };
+        
+        receiptContent.innerHTML = `
+            <p><strong>凭证编号：</strong>${receiptId}</p>
+            <p><strong>姓名：</strong>${name}</p>
+            <p><strong>参赛类别：</strong>${categoryMap[category]}</p>
+        `;
+        receiptModal.style.display = 'flex';
+        
+        // 成功后清空草稿
+        localStorage.removeItem('sacc-draft');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        receiptModal.style.display = 'none';
+        form.reset();
+    });
+</script>
+
+</body>
+</html>
