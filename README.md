@@ -28,8 +28,8 @@
 
 ## 🚀 快速开始
 
-### 1️⃣ 克隆项目到本地
+###  克隆项目到本地
 
 ```bash
-git clone https://github.com/你的用户名/sacc-registration.git
+git clone https://github.com/sqwzt/sacc-registration.git
 cd sacc-registration
